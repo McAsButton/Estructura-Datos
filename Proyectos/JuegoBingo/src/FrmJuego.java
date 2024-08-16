@@ -123,7 +123,7 @@ public class FrmJuego extends JFrame { // Clase principal que hereda de JFrame p
 
             @Override
             public void actionPerformed(ActionEvent e) { // Acción a realizar cuando se seleccione un elemento del combo box
-                cmbTabla_Clic(e); // Llamar al método cmbTabla_Clic
+                cmbTabla_Click(e); // Llamar al método cmbTabla_Clic
             }
         });
 
@@ -153,11 +153,12 @@ public class FrmJuego extends JFrame { // Clase principal que hereda de JFrame p
         }
         Cantor.iniciar(); // Iniciar el proceso de selección de balotas
         Cantor.mostrarBalotas(tblNumeros); // Mostrar las balotas en la tabla de números
+        limpiarTablaJugador(tblTabla); // Limpiar la tabla del jugador
         btnSacarBalota.setEnabled(true); // Activar el botón "Sacar Balota"
     }
 
     // Método del combo box Tabla
-    private void cmbTabla_Clic(ActionEvent evt) {
+    private void cmbTabla_Click(ActionEvent evt) {
         if (cmbTabla.getSelectedIndex() >= 0) { // Verificar si se ha seleccionado una tabla
             tablas[cmbTabla.getSelectedIndex()].mostrar(tblTabla); // Mostrar la tabla seleccionada en la tabla del jugador
         }
@@ -184,6 +185,18 @@ public class FrmJuego extends JFrame { // Clase principal que hereda de JFrame p
                 btnSacarBalota.setEnabled(false); // Desactivar el botón "Sacar Balota"
                 JOptionPane.showMessageDialog(this, "Se han sacado todas las balotas"); // Mostrar mensaje de fin de juego
             }        
+        }
+    }
+
+    public void limpiarTablaJugador(JTable tablaJugador) {
+        // Obtener el modelo de la tabla
+        DefaultTableModel model = (DefaultTableModel) tablaJugador.getModel();
+        
+        // Recorrer todas las celdas de la tabla y establecerlas como vacías
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                model.setValueAt("", i, j);
+            }
         }
     }
 }
