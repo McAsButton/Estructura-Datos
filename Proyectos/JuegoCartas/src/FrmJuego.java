@@ -67,6 +67,17 @@ public class FrmJuego extends JFrame {
     }
 
     private void btnVerificarClick(ActionEvent evt) {
+        int pestana = tpJugadores.getSelectedIndex(); // Obtener el índice de la pestaña seleccionada
+        switch (pestana) { // Evaluar el índice de la pestaña seleccionada
+            case 0: // Si el índice es 0
+                JOptionPane.showMessageDialog(null, jugador1.getGrupos()); // Mostrar un mensaje con los grupos encontrados
+                break;
+            case 1: // Si el índice es 1
+                JOptionPane.showMessageDialog(null, jugador2.getGrupos()); // Mostrar un mensaje con los grupos encontrados
+                break;
+            default:
+                break;
+        }        
     }
 
 }

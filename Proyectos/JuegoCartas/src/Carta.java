@@ -32,12 +32,18 @@ public class Carta {
         }
     }
 
-    // Método para obtener el nombre de la carta
+    // Método para obtener el nombre de la carta (enumeración)
     public NombreCarta getNombre() { // Método para obtener el nombre de la carta
         int residuo = indice % 13; // Calcular el residuo de la división del indice entre 13
         if (residuo == 0) { // Si el residuo es igual a 0
             residuo = 13; // Asignar el valor 13 al residuo
         }
         return NombreCarta.values()[residuo - 1]; // Retornar el nombre de la carta
+    }
+
+    // Método para obtener el valor de la carta
+    public int getValor() {
+        // TODO: Implementar el método para obtener el valor de la carta
+        return 0; // Retornar el valor de la carta
     }
 }

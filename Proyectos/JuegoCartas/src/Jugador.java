@@ -28,4 +28,27 @@ public class Jugador {
         }
         pnl.repaint(); // Volver a pintar el panel
     }
+
+    // Método para verificar los grupos de cartas
+    public String getGrupos(){
+        String mensaje = "No se encontraron grupos"; // Inicializar el mensaje default
+        int[] contadores = new int[NombreCarta.values().length]; // Declarar un arreglo de contadores
+
+        // Contar las cartas de cada tipo
+        for (Carta c : cartas) {
+            contadores[c.getNombre().ordinal()]++; // Incrementar el contador de la carta
+        }
+
+        boolean hayGrupos = false;  // Declarar una variable para indicar si hay grupos
+        for (int i = 0; i < contadores.length; i++) {
+            if (contadores[i] >= 2) {
+                if (!hayGrupos) {
+                    hayGrupos = true;
+                    mensaje = "Los grupos encontrados son:\n";
+                }
+                mensaje += Grupo.values()[contadores[i]] + " de " + NombreCarta.values()[i] + "\n";
+            }
+        }
+        return mensaje;
+    }
 }
