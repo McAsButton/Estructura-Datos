@@ -40,10 +40,4 @@ public class Carta {
         }
         return NombreCarta.values()[residuo - 1]; // Retornar el nombre de la carta
     }
-
-    // Método para obtener el valor de la carta
-    public int getValor() {
-        // TODO: Implementar el método para obtener el valor de la carta
-        return 0; // Retornar el valor de la carta
-    }
 }
