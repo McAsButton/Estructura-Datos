@@ -79,12 +79,10 @@ public class FrmJuego extends JFrame {
         int pestana = tpJugadores.getSelectedIndex(); // Obtener el índice de la pestaña seleccionada
         switch (pestana) { // Evaluar el índice de la pestaña seleccionada
             case 0: // Si el índice es 0
-                JOptionPane.showMessageDialog(null, jugador1.getGruposYCalcularPuntaje()); // Mostrar un mensaje con los grupos
-                                                                           // encontrados
+                JOptionPane.showMessageDialog(null, jugador1.getGruposYCalcularPuntaje()); // Mostrar un mensaje con los grupos encontrados
                 break;
             case 1: // Si el índice es 1
-                JOptionPane.showMessageDialog(null, jugador2.getGruposYCalcularPuntaje()); // Mostrar un mensaje con los grupos
-                                                                           // encontrados
+                JOptionPane.showMessageDialog(null, jugador2.getGruposYCalcularPuntaje()); // Mostrar un mensaje con los grupos encontrados
                 break;
             default:
                 break;
@@ -96,13 +94,13 @@ public class FrmJuego extends JFrame {
         switch (pestana) { // Evaluar el índice de la pestaña seleccionada
             case 0: // Si el índice es 0
                 // Alternar el criterio de ordenación para el próximo clic
-                jugador1.setOrdenarPorPinta(!jugador1.isOrdenarPorPinta());
+                jugador1.setOrdenarPorPinta(!jugador1.isOrdenarPorPinta()); // Alternar el criterio de ordenación
                 jugador1.ordenarCartas(); // Ordenar las cartas
                 jugador1.mostrarCartas(pnlJugador1); // Mostrar las cartas en el panel
                 break;
             case 1: // Si el índice es 1
                 // Alternar el criterio de ordenación para el próximo clic
-                jugador2.setOrdenarPorPinta(!jugador2.isOrdenarPorPinta());
+                jugador2.setOrdenarPorPinta(!jugador2.isOrdenarPorPinta()); // Alternar el criterio de ordenación
                 jugador2.ordenarCartas(); // Ordenar las cartas
                 jugador2.mostrarCartas(pnlJugador2); // Mostrar las cartas en el panel
                 break;

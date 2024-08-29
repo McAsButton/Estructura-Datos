@@ -40,21 +40,22 @@ public class Jugador {
     
         // Contar cartas de cada tipo
         for (Carta c : cartas) {
-            contadores[c.getNombre().ordinal()]++;
+            contadores[c.getNombre().ordinal()]++; // Incrementar el contador del tipo de carta
         }
     
         boolean hayGrupos = false; // Variable para indicar si hay grupos
+        // Verificar si hay grupos de cartas iguales
         for (int i = 0; i < contadores.length; i++) {
-            final int INDEX = i;
-            if (contadores[i] >= 2) {
-                if (!hayGrupos) {
-                    mensaje = new StringBuilder("Los grupos encontrados son:\n");
-                    hayGrupos = true;
+            final int INDEX = i; // Variable final para el índice actual
+            if (contadores[i] >= 2) { // Si hay dos o más cartas del mismo tipo
+                if (!hayGrupos) { // Si se han encontrado grupos
+                    mensaje = new StringBuilder("Los grupos encontrados son:\n"); // Inicializar el mensaje
+                    hayGrupos = true; // Indicar que se encontraron grupos
                 }
-                Grupo grupo = Grupo.values()[contadores[i]];
-                mensaje.append(grupo).append(" de ").append(NombreCarta.values()[i]).append("\n");
+                Grupo grupo = Grupo.values()[contadores[i]]; // Obtener el grupo correspondiente
+                mensaje.append(grupo).append(" de ").append(NombreCarta.values()[i]).append("\n"); // Agregar al mensaje
     
-                // Agregar las cartas al set de cartas en grupo
+                // Agregar las cartas al set de cartas en grupo si forman un grupo
                 Arrays.stream(cartas)
                         .filter(c -> c.getNombre() == NombreCarta.values()[INDEX])
                         .forEach(cartasEnGrupo::add);
@@ -62,9 +63,10 @@ public class Jugador {
         }
     
         // Agrupar cartas por pinta
-        boolean hayGruposDeColor = false;
+        boolean hayGruposDeColor = false; // Variable para indicar si hay grupos de color
+        // Recorrer todas las pintas
         for (Pinta pinta : Pinta.values()) {
-            List<Integer> valores = Arrays.stream(cartas) // Convertir el arreglo a un stream
+            List<Integer> valores = Arrays.stream(cartas) // Convertir el arreglo a un stream de cartas y filtrar por pinta
                     .filter(c -> c.getPinta() == pinta)
                     .map(c -> c.getNombre().ordinal())
                     .sorted()
@@ -73,41 +75,41 @@ public class Jugador {
     
             // Verificar si hay cartas para formar un grupo
             if (valores.size() >= 2) {
-                List<Integer> grupoActual = new ArrayList<>();
-                for (int i = 0; i < valores.size(); i++) {
-                    if (grupoActual.isEmpty() || valores.get(i) == grupoActual.get(grupoActual.size() - 1) + 1) {
-                        grupoActual.add(valores.get(i));
+                List<Integer> grupoActual = new ArrayList<>(); // Lista para el grupo actual
+                for (int i = 0; i < valores.size(); i++) { // Recorrer los valores
+                    if (grupoActual.isEmpty() || valores.get(i) == grupoActual.get(grupoActual.size() - 1) + 1) { // Si el valor es consecutivo al anterior
+                        grupoActual.add(valores.get(i)); // Agregar al grupo actual
                     } else {
-                        if (grupoActual.size() >= 2) {
-                            Grupo grupo = Grupo.values()[grupoActual.size()];
-                            if (grupo != Grupo.VACIO) {
-                                hayGruposDeColor = true;
-                                mensaje.append(grupo).append(" de ").append(pinta).append(": ")
+                        if (grupoActual.size() >= 2) { // Si hay dos o más cartas en el grupo
+                            Grupo grupo = Grupo.values()[grupoActual.size()]; // Obtener el grupo correspondiente
+                            if (grupo != Grupo.VACIO) { // Si el grupo no está vacío
+                                hayGruposDeColor = true; // Indicar que se encontraron grupos de color
+                                mensaje.append(grupo).append(" de ").append(pinta).append(": ") // Agregar al mensaje
                                         .append(grupoActual.stream().map(n -> NombreCarta.values()[n].toString())
                                                 .collect(Collectors.joining(", ")))
                                         .append("\n");
     
-                                // Agregar las cartas al set de cartas en grupo
+                                // Agregar las cartas al set de cartas en grupo si forman un grupo
                                 grupoActual.forEach(n -> Arrays.stream(cartas)
                                         .filter(c -> c.getPinta() == pinta && c.getNombre() == NombreCarta.values()[n])
                                         .forEach(cartasEnGrupo::add));
                             }
                         }
-                        grupoActual.clear();
-                        grupoActual.add(valores.get(i));
+                        grupoActual.clear(); // Limpiar el grupo actual
+                        grupoActual.add(valores.get(i)); // Agregar el valor al grupo actual
                     }
                 }
     
                 // Verificar el último grupo
                 if (grupoActual.size() >= 2) {
-                    Grupo grupo = Grupo.values()[grupoActual.size()];
-                    hayGruposDeColor = true;
-                    mensaje.append(grupo).append(" de ").append(pinta).append(": ")
+                    Grupo grupo = Grupo.values()[grupoActual.size()]; // Obtener el grupo correspondiente
+                    hayGruposDeColor = true; // Indicar que se encontraron grupos de color
+                    mensaje.append(grupo).append(" de ").append(pinta).append(": ") // Agregar al mensaje
                             .append(grupoActual.stream().map(n -> NombreCarta.values()[n].toString())
                                     .collect(Collectors.joining(", ")))
                             .append("\n");
     
-                    // Agregar las cartas al set de cartas en grupo
+                    // Agregar las cartas al set de cartas en grupo si forman un grupo
                     grupoActual.forEach(n -> Arrays.stream(cartas)
                             .filter(c -> c.getPinta() == pinta && c.getNombre() == NombreCarta.values()[n])
                             .forEach(cartasEnGrupo::add));
@@ -115,19 +117,19 @@ public class Jugador {
             }
         }
     
-        if (!hayGrupos && !hayGruposDeColor) {
-            mensaje.append("No se encontraron grupos\n");
+        if (!hayGrupos && !hayGruposDeColor) { // Si no se encontraron grupos
+            mensaje.append("No se encontraron grupos\n"); // Agregar al mensaje
         }
     
         // Calcular el puntaje de las cartas que no están en grupos
-        int puntajeNoEnGrupo = Arrays.stream(cartas)
+        int puntajeNoEnGrupo = Arrays.stream(cartas) // Calcular el puntaje de las cartas que no están en grupos y sumarlos
                 .filter(c -> !cartasEnGrupo.contains(c))
                 .mapToInt(c -> c.getNombre().retornarNumero())
                 .sum();
     
-        mensaje.append("Puntaje de cartas que no están en grupos: ").append(puntajeNoEnGrupo);
+        mensaje.append("Puntaje de cartas que no están en grupos: ").append(puntajeNoEnGrupo); // Agregar al mensaje
     
-        return mensaje.toString();
+        return mensaje.toString(); // Retornar el mensaje
     }
 
     // Método para ordenar las cartas
@@ -141,10 +143,12 @@ public class Jugador {
         }
     }
 
+    // Método para obtener el estado de la variable ordenarPorPinta
     public boolean isOrdenarPorPinta() {
-        return ordenarPorPinta;
+        return ordenarPorPinta; 
     }
 
+    // Método para establecer el estado de la variable ordenarPorPinta
     public void setOrdenarPorPinta(boolean ordenarPorPinta) {
         this.ordenarPorPinta = ordenarPorPinta;
     }

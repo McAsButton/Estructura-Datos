@@ -13,12 +13,14 @@ public enum NombreCarta {
     QUEEN(10),
     KING(10);
     
-    private int numero;
+    private int numero; // Declarar la variable numero
     
+    // Constructor de la enumeración NombreCarta
     NombreCarta(final int NUMERO){
         this.numero=NUMERO;
     }
     
+    // Método para retornar el número de la carta
     public int retornarNumero(){
         return numero;
     }
