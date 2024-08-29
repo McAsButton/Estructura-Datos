@@ -1,5 +1,5 @@
 public enum NombreCarta {
-    AS(1),
+    AS(10),
     DOS(2),
     TRES(3),
     CUATRO(4),
