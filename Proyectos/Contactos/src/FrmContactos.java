@@ -14,7 +14,7 @@ public class FrmContactos extends JFrame {
 
     private JToolBar jtbContactos;
     private JTable tblContactos;
-
+    private String nombreArchivo;
 
     Lista lContactos = new Lista();
 
@@ -22,7 +22,7 @@ public class FrmContactos extends JFrame {
         setSize(600, 300);
         setTitle("Contactos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         jtbContactos = new JToolBar();
         tblContactos = new JTable();
 
@@ -50,7 +50,7 @@ public class FrmContactos extends JFrame {
         getContentPane().add(jtbContactos, BorderLayout.NORTH);
         getContentPane().add(jspContactos, BorderLayout.CENTER);
 
-        String nombreArchivo = System.getProperty("user.dir") + "/Proyectos/Contactos/src/Data/Datos.txt";
+        nombreArchivo = System.getProperty("user.dir") + "/Proyectos/Contactos/src/Data/Datos.txt";
 
         lContactos.desdeArchivo(nombreArchivo);
         lContactos.mostrar(tblContactos);
@@ -61,7 +61,7 @@ public class FrmContactos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 btnAgregar_Click(e);
             }
-            
+
         });
 
         btnEliminar.addActionListener(new ActionListener() {
@@ -70,7 +70,7 @@ public class FrmContactos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 btnEliminar_Click(e);
             }
-            
+
         });
 
         btnGuardar.addActionListener(new ActionListener() {
@@ -79,7 +79,7 @@ public class FrmContactos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 btnGuardar_Click(e);
             }
-            
+
         });
 
         btnOrdenar.addActionListener(new ActionListener() {
@@ -88,7 +88,7 @@ public class FrmContactos extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 btnOrdenar_Click(e);
             }
-            
+
         });
     }
 
@@ -99,15 +99,21 @@ public class FrmContactos extends JFrame {
 
     private void btnEliminar_Click(ActionEvent e) {
         if (tblContactos.getSelectedRow() >= 0) {
-            lContactos.eliminar(lContactos.obtener(tblContactos.getSelectedRow()));
+            lContactos.eliminar(lContactos.getNodo(tblContactos.getSelectedRow()));
             lContactos.mostrar(tblContactos);
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un registro de la lista.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un registro de la lista.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void btnGuardar_Click(ActionEvent e) {
-
+        if (lContactos.haciaArchivo(nombreArchivo)) {
+            JOptionPane.showMessageDialog(null, "Datos guardados correctamente.", "Información",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void btnOrdenar_Click(ActionEvent e) {

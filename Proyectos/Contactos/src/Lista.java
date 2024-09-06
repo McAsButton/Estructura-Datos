@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Lista {
@@ -25,7 +27,7 @@ public class Lista {
         }
     }
 
-    public Nodo obtener(int posicion){
+    public Nodo getNodo(int posicion) {
         int contador = 0;
         Nodo apuntador = cabeza;
         while (apuntador != null && contador < posicion) {
@@ -36,7 +38,7 @@ public class Lista {
 
     }
 
-    public void eliminar(Nodo n){
+    public void eliminar(Nodo n) {
         if (n != null && cabeza != null) {
             boolean encontrado = false;
             Nodo apuntador = cabeza;
@@ -77,7 +79,19 @@ public class Lista {
         }
     }
 
-    public int getLongitud(){
+    public boolean haciaArchivo(String nombreArchivo) {
+        String[] lineas = new String[getLongitud()];
+
+        Nodo apuntador = cabeza;
+        int fila = 0;
+        while (apuntador != null) {
+            lineas[fila++] = apuntador.toString();
+            apuntador = apuntador.siguiente;
+        }
+        return Archivo.guardarArchivo(nombreArchivo, lineas);
+    }
+
+    public int getLongitud() {
         int totalNodos = 0;
         Nodo apuntador = cabeza;
         while (apuntador != null) {
@@ -87,8 +101,16 @@ public class Lista {
         return totalNodos;
     }
 
-    public void mostrar(JTable tbl){
-        String[] encabezados = {"Nombre", "Telefono", "Celular", "Direccion", "Correo"};
+    public void actualizar(int posicion, String nombre, String telefono, String celular, String direccion,
+            String correo) {
+        Nodo n = getNodo(posicion);
+        if (n != null) {
+            n.actualizar(nombre, telefono, celular, direccion, correo);
+        }
+    }
+
+    public void mostrar(JTable tbl) {
+        String[] encabezados = { "Nombre", "Telefono", "Celular", "Direccion", "Correo" };
         String[][] datos = new String[getLongitud()][5];
 
         int fila = 0;
@@ -99,11 +121,25 @@ public class Lista {
             datos[fila][2] = apuntador.celular;
             datos[fila][3] = apuntador.direccion;
             datos[fila][4] = apuntador.correo;
-            
+
             fila++;
             apuntador = apuntador.siguiente;
         }
         DefaultTableModel dtm = new DefaultTableModel(datos, encabezados);
+        dtm.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                int fila = e.getFirstRow();
+                DefaultTableModel dtm = (DefaultTableModel) e.getSource();
+                actualizar(fila,
+                        (String) dtm.getValueAt(fila, 0),
+                        (String) dtm.getValueAt(fila, 1),
+                        (String) dtm.getValueAt(fila, 2),
+                        (String) dtm.getValueAt(fila, 3),
+                        (String) dtm.getValueAt(fila, 4));
+            }
+        });
+
         tbl.setModel(dtm);
     }
 }
