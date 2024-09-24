@@ -50,7 +50,7 @@ public class FrmContactos extends JFrame {
         getContentPane().add(jtbContactos, BorderLayout.NORTH);
         getContentPane().add(jspContactos, BorderLayout.CENTER);
 
-        nombreArchivo = System.getProperty("user.dir") + "/Proyectos/Contactos/src/Data/Datos.txt";
+        nombreArchivo = System.getProperty("user.dir") + "/src/Data/Datos.txt";
 
         lContactos.desdeArchivo(nombreArchivo);
         lContactos.mostrar(tblContactos);

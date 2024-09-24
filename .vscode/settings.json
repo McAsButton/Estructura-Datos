@@ -10,7 +10,6 @@
         "c:\\Program Files\\Java\\javafx-sdk-22.0.2\\lib\\javafx.web.jar",
         "c:\\Program Files\\Java\\javafx-sdk-22.0.2\\lib\\javafx-swt.jar"
     ],
-    "cSpell.words": [
-        "Puntaje"
-    ]
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
 }
