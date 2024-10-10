@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JProgressBar;
 
 public class Documento {
 
@@ -120,16 +119,13 @@ public class Documento {
     }
 
     // Método que ordena los datos según el algoritmo de la BURBUJA
-    public static void ordenarBurbuja(int criterio, JProgressBar progressBar) {
+    public static void ordenarBurbuja(int criterio) {
         int total = documentos.size();
         int step = total / 100;
-        int progress = 0;
+        int progresoActual = 0; // Inicializamos la barra de progreso al 0%
 
         // Inicializamos la barra de progreso al 0%
-        imprimirBarraProgreso(progress, 100);
-
-        // Inicializamos la barra de progreso al 0%
-        progressBar.setValue(0);
+        imprimirBarraProgreso(progresoActual, 100);
 
         for (int i = 0; i < documentos.size() - 1; i++) {
             for (int j = i + 1; j < documentos.size(); j++) {
@@ -141,20 +137,18 @@ public class Documento {
             }
 
             // Actualizamos la barra de progreso después de cada iteración del bucle externo
-            if (i > 0 && i % step == 0 && progress < 100) {
-                progress++; // Incrementar el progreso
+            if (i > 0 && i % step == 0 && progresoActual < 100) {
+                progresoActual++; // Incrementar el progreso
                 // Actualizar barra de consola
-                imprimirBarraProgreso(progress, 100);
-                // Actualizar barra de progreso de la interfaz
-                progressBar.setValue(progress);
+                imprimirBarraProgreso(progresoActual, 100);
             }
         }
         // Asegúrate de que la barra se complete al 100%
-        progressBar.setValue(100);
         imprimirBarraProgreso(100, 100); // Imprimir la barra de la consola completa
         System.out.println(); // Salto de línea
     }
 
+    // Metodo para imprimir la barra de progreso en consola
     public static void imprimirBarraProgreso(int progress, int total) {
         int width = 50; // Ancho de la barra de progreso
         int filled = (int) ((progress / (float) total) * width);
@@ -169,5 +163,57 @@ public class Documento {
         }
         barra.append("] " + (progress) + "%");
         System.out.print("\r" + barra.toString()); // \r para sobrescribir la línea actual
+    }
+
+    // Metodo que ordena los datos según el algoritmo quicksort
+    private static int localizarPivote(int inicio, int fin, int criterio) {
+    int pivote = inicio;
+    Documento documentoP = documentos.get(pivote);
+    for (int i = inicio + 1; i <= fin; i++) {
+    if (esMayor(documentoP, documentos.get(i), criterio)) {
+    intercambiar(pivote, i);
+    pivote++;
+    }
+    }
+    return pivote;
+    }
+
+    public static void ordenarRapido(int inicio, int fin, int criterio) {
+    if (inicio >= fin) {
+    return;
+    }
+    int pivote = localizarPivote(inicio, fin, criterio);
+    ordenarRapido(inicio, pivote - 1, criterio);
+    ordenarRapido(pivote + 1, fin, criterio);
+    }
+
+    // Metodo que ordena los datos según el algoritmo de inserción
+    public static void ordenarInsercion(int criterio) {
+        int total = documentos.size();
+        int step = total / 100;
+        int progresoActual = 0; // Inicializamos la barra de progreso al 0%
+
+        // Inicializamos la barra de progreso al 0%
+        imprimirBarraProgreso(progresoActual, 100);
+
+        for (int i = 1; i < documentos.size(); i++) {
+            Documento temp = documentos.get(i);
+            int j = i - 1;
+            while (j >= 0 && esMayor(documentos.get(j), temp, criterio)) {
+                documentos.set(j + 1, documentos.get(j));
+                j--;
+            }
+            documentos.set(j + 1, temp);
+
+            // Actualizamos la barra de progreso después de cada iteración del bucle externo
+            if (i > 0 && i % step == 0 && progresoActual < 100) {
+                progresoActual++; // Incrementar el progreso
+                // Actualizar barra de consola
+                imprimirBarraProgreso(progresoActual, 100);
+            }
+        }
+        // Asegúrate de que la barra se complete al 100%
+        imprimirBarraProgreso(100, 100); // Imprimir la barra de la consola completa
+        System.out.println(); // Salto de línea
     }
 }
