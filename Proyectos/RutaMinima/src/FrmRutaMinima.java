@@ -16,8 +16,8 @@ public class FrmRutaMinima extends JFrame {
 
     private Grafo g;
     private JTable tblRutaMinima;
-    private JComboBox cmbDesde;
-    private JComboBox cmbHasta;
+    private JComboBox<String> cmbDesde;
+    private JComboBox<String> cmbHasta;
 
     public FrmRutaMinima() {
         setSize(600, 450);
@@ -58,11 +58,11 @@ public class FrmRutaMinima extends JFrame {
         lblHasta.setBounds(10, 35, 100, 25);
         pnlRutaMinima.add(lblHasta);
 
-        cmbDesde = new JComboBox();
+        cmbDesde = new JComboBox<>();
         cmbDesde.setBounds(120, 10, 200, 25);
         pnlRutaMinima.add(cmbDesde);
 
-        cmbHasta = new JComboBox();
+        cmbHasta = new JComboBox<>();
         cmbHasta.setBounds(120, 35, 200, 25);
         pnlRutaMinima.add(cmbHasta);
 

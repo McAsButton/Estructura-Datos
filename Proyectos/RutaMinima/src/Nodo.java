@@ -19,8 +19,8 @@ public class Nodo {
 
     public Nodo(String nombre) {
         this.nombre = nombre;
-        vecinos = new ArrayList();
-        valores = new ArrayList();
+        vecinos = new ArrayList<Nodo>();
+        valores = new ArrayList<Double>();
     }
 
     public String getNombre() {

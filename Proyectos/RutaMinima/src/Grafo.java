@@ -81,7 +81,7 @@ public class Grafo {
         tbl.setModel(dtm);
     }
 
-    public void mostrarNodos(JComboBox cmb) {
+    public void mostrarNodos(JComboBox<String> cmb) {
         cmb.removeAllItems();
         for (Nodo n : nodos) {
             cmb.addItem(n.getNombre());
@@ -144,7 +144,7 @@ public class Grafo {
         Resultado r = dijkstra(g, inicio);
         Nodo n = g.getNodos().get(fin);
         if (r.getNodos().contains(n)) {
-            Stack pila = new Stack();
+            Stack<Nodo> pila = new Stack<>();
             while (n != null) {
                 pila.add(n);
                 n = n.getPadre();
