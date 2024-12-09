@@ -13,7 +13,7 @@ public class ColaPrioridad {
         return elementos.size() == 0;
     }
 
-    public Object obtenerPrimero(){
+    public Object obtenerPrimero() {
         if (vacia()) {
             return null;
         } else {
@@ -21,11 +21,11 @@ public class ColaPrioridad {
         }
     }
 
-    public double obtenerPrioridadPrimero(){
+    public double obtenerPrioridadPrimero() {
         return obtenerPrimero() == null ? -1 : ((ElementoCola) obtenerPrimero()).prioridad;
     }
 
-    public void encolar(Object elemento, double prioridad){
+    public void encolar(Object elemento, double prioridad) {
         int i = 0;
         while (i < elementos.size() && elementos.get(i).prioridad < prioridad) {
             i++;
@@ -33,20 +33,21 @@ public class ColaPrioridad {
         elementos.add(i, new ElementoCola(elemento, prioridad));
     }
 
-    public Object desencolar(){
+    public Object desencolar() {
         if (vacia()) {
             return null;
         } else {
-            return elementos.remove(0).elemento;
+            ElementoCola elemento = elementos.get(0);
+            elementos.remove(0);
+            return elemento;
         }
     }
 
-    // Metodo contiene
-    public boolean contiene(Object elemento){
+    public boolean contiene(Object elemento) {
         int i = 0;
         boolean encontrado = false;
-        while (i < elementos.size() && !encontrado){
-            if (elementos.get(i).elemento.equals(elemento)){
+        while (i < elementos.size() && !encontrado) {
+            if (elementos.get(i).elemento.equals(elemento)) {
                 encontrado = true;
             }
             i++;
@@ -54,15 +55,15 @@ public class ColaPrioridad {
         return encontrado;
     }
 
-    // Metodo eliminar
     public void eliminar(Object elemento){
         int i = 0;
-        while (i < elementos.size()){
-            if (elementos.get(i).elemento.equals(elemento)){
+        while (i < elementos.size()) {
+            if (elementos.get(i).elemento.equals(elemento)) {
                 elementos.remove(i);
                 return;
             }
             i++;
         }
     }
+
 }

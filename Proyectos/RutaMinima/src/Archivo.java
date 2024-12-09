@@ -7,10 +7,10 @@ import java.io.*;
 
 public class Archivo {
 
-    // Metodo para mostrar una ventana que permita elegir un archivo mediante
-    // exploracion
+    //Metodo para mostrar una ventana que permita elegir un archivo mediante exploracion
     public static String elegirArchivo() {
         JFileChooser fc = new JFileChooser();
+
 
         if (fc.showOpenDialog(new JFrame()) == JFileChooser.APPROVE_OPTION) {
             File f = fc.getSelectedFile();
@@ -47,7 +47,7 @@ public class Archivo {
         } else {
             return null;
         }
-    }// abrirArchivo
+    }//abrirArchivo
 
     // Método estático para guardar archivos planos dado un conjunto de líneas
     public static boolean guardarArchivo(String nombreArchivo, String[] lineas) {
@@ -57,14 +57,14 @@ public class Archivo {
              * escritura del archivo. Es susceptible de no poder realizarse
              */
             try {
-                // Abrir el archivo para escritura
+                //Abrir el archivo para escritura
                 BufferedWriter bw = new BufferedWriter(new FileWriter(nombreArchivo));
                 for (int i = 0; i < lineas.length; i++) {
-                    // Guardar cada linea
+                    //Guardar cada linea
                     bw.write(lineas[i]);
                     bw.newLine();
                 }
-                // Cerrar el archivo
+                //Cerrar el archivo
                 bw.close();
                 return true;
             } catch (IOException e) {

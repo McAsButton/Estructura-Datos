@@ -1,5 +1,4 @@
 public class ElementoCola {
-
     public Object elemento;
     public double prioridad;
 

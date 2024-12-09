@@ -5,12 +5,22 @@ public class Nodo {
 
     private String nombre;
     private double valor;
+    private Nodo padre;
     private List<Nodo> vecinos;
     private List<Double> valores;
 
+    public Nodo getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Nodo padre) {
+        this.padre = padre;
+    }
+
     public Nodo(String nombre) {
         this.nombre = nombre;
-        vecinos = new ArrayList<>();
+        vecinos = new ArrayList();
+        valores = new ArrayList();
     }
 
     public String getNombre() {
@@ -21,17 +31,9 @@ public class Nodo {
         this.nombre = nombre;
     }
 
-    public List<Double> getValores() {
-        return valores;
-    }
-
-    public void setValores(List<Double> valores) {
-        this.valores = valores;
-    }
-
     @Override
-    public boolean equals(Object obj) {
-        return nombre.equals(((Nodo) obj).getNombre());
+    public boolean equals(Object n) {
+        return nombre.equals(((Nodo) n).getNombre());
     }
 
     public double getValor() {
@@ -46,12 +48,13 @@ public class Nodo {
         return vecinos;
     }
 
-    public void setVecinos(List<Nodo> vecinos) {
-        this.vecinos = vecinos;
+    public List<Double> getValores() {
+        return valores;
     }
 
     public void agregarVecino(Nodo n, double valor) {
         vecinos.add(n);
         valores.add(valor);
     }
+
 }
